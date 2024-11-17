@@ -1,0 +1,40 @@
+// PDF
+clc; clear all;
+
+N = 1000000;
+x = randn(1, N);
+mu = mean(x);
+sigma2 = var(x);
+step = 0.1;
+range = -3 : step : 3; h = histc(x, range);
+
+sim_pdf = h ./ (step .* sum(h));
+plot(range, sim_pdf, 'r--');
+
+hold on;
+
+th_pdf = (1 ./ sqrt(2 .* pi .* sigma2 .^ 2)) .* exp(-(range - mu) .^ 2 ./ (2 .* sigma2));
+plot(range, th_pdf, 'x');
+
+f = trapz(range, th_pdf);
+
+
+// CDF
+
+N = 1000000;
+x = randn(1, N);
+mu = mean(x);
+sigma2 = var(x);
+step = 0.1;
+range = -3 : step : 3; h = histc(x, range);
+
+sim_pdf = h ./ (step .* sum(h));
+plot(range, sim_pdf, 'r--');
+
+hold on;
+
+th_pdf = (1 ./ sqrt(2 .* pi .* sigma2 .^ 2)) .* exp(-(range - mu) .^ 2 ./ (2 .* sigma2));
+plot(range, th_pdf, 'b--');
+
+c = integral(range, mu, sigma2);
+

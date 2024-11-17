@@ -1,0 +1,33 @@
+n = 100;
+x = rand(1, n);
+
+vmin = min(x);
+vmax = max(x);
+xpow = sum(x.^2) / n;
+
+for i = 1:14
+    L(i) = 2^i;
+    d = (vmax - vmin) / L(i);
+
+    for j = 1:length(x)
+        start = vmin;
+        while (start < x(j))
+            start = start + d;
+        end
+        xq(j) = start - d;
+
+        if (start == x(j))
+            xq(j) = start;
+        end
+    end
+
+    err = x - xq;
+    noisepow(i) = sum(err.^2) / n;
+end
+
+sqnr = xpow ./ noisepow;
+snrdb = 10 .* log10(sqnr);
+plot(L, snrdb) % Fix: Change "sqnrdb" to "snrdb"
+xlabel('Number of quantization levels');
+ylabel('SNR (dB)'); % Fix: Change "sqNR" to "SNR"
+title('Uniform Quantization');

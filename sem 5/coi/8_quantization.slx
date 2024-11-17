@@ -1,0 +1,37 @@
+clearvars, close all;
+fm = 2; fs = 1000 * fm;
+t = 0 : 1/fs : 1;
+a = 3.5;
+x = a * sin(2 * pi * fm * t);
+plot(t, x, 'k-');
+hold on;
+grid on;
+enc = [];
+for i = 1 : length(x)
+    if x(i) >= -3.5 && x(i) <= -2.5
+        xq(i) = -3;
+        enc = [0 0 0];
+    elseif x(i) > -2.5 && x(i) <= -1.5
+        xq(i) = -2;
+        enc = [0 0 1];
+    elseif x(i) > -1.5 && x(i) <= -0.5
+        xq(i) = -1;
+        enc = [0 1 0];
+    elseif x(i) > -0.5 && x(i) <= 0.5
+        xq(i) = 0;
+        enc = [0 1 1];
+    elseif x(i) > 0.5 && x(i) <= 1.5
+        xq(i) = 1;
+        enc = [1 0 0];
+    elseif x(i) > 1.5 && x(i) <= 2.5
+        xq(i) = 2;
+        enc = [1 0 1];
+    elseif x(i) > 2.5 && x(i) <= 3.5
+        xq(i) = 3;
+        enc = [1 1 0];
+    end
+end
+
+plot(t, xq, 'm');
+figure
+plot(x, x - xq, 'r-');
